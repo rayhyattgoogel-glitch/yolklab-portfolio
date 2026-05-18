@@ -1,0 +1,66 @@
+name: Sync release notes
+
+on:
+  schedule:
+    # 北京时间 01:23（UTC 17:23），错开 提示词工具 的 18:00 整点
+    - cron: "23 17 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync GitHub releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm sync:releases
+
+      - name: Detect changes
+        id: detect
+        run: |
+          if [ -n "$(git status --porcelain content/releases)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push if changed
+        if: steps.detect.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/releases
+          git commit -m "chore(releases): sync from GitHub Releases"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          if [ "${{ steps.detect.outputs.changed }}" = "true" ]; then
+            echo "✓ Release notes updated and pushed." >> "$GITHUB_STEP_SUMMARY"
+            git --no-pager log -1 --stat >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "= No release changes." >> "$GITHUB_STEP_SUMMARY"
+          fi

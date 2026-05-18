@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-05-18T15:34:10.058Z",
+  "products": [
+    {
+      "slug": "prompt-tools",
+      "title": "靓开源提示词",
+      "type": "tool",
+      "status": "live",
+      "year": 2026,
+      "launchedAt": "2026-05-18",
+      "oneLiner": "117 条中文 AI 提示词的精致前端，开箱即用",
+      "tags": [
+        "AI",
+        "提示词",
+        "中文",
+        "MDX"
+      ],
+      "cover": "/covers/prompt-tools.svg",
+      "entryCount": 2,
+      "hasQr": false,
+      "releaseCount": 2,
+      "latestRelease": "2026-05-18"
+    }
+  ],
+  "releases": [
+    {
+      "product": "prompt-tools",
+      "productTitle": "靓开源提示词",
+      "productType": "tool",
+      "date": "2026-05-18",
+      "version": "1.1.0",
+      "kind": "feature",
+      "title": "新增收藏夹与暗色主题"
+    },
+    {
+      "product": "prompt-tools",
+      "productTitle": "靓开源提示词",
+      "productType": "tool",
+      "date": "2026-05-18",
+      "version": "1.0.0",
+      "kind": "release",
+      "title": "首发上线"
+    }
+  ],
+  "counts": {
+    "tools": 1,
+    "games": 0,
+    "total": 1,
+    "releases": 2
+  }
+}

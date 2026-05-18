@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1612"/>
+      <stop offset="100%" stop-color="#0d0c0a"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="80%" cy="22%" r="50%">
+      <stop offset="0%" stop-color="#d4a84a" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#d4a84a" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#d4a84a" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#f3eee0" stroke-opacity="0.025" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <rect width="1600" height="1000" fill="url(#halo)"/>
+
+  <!-- Top eyebrow -->
+  <g>
+    <line x1="80" y1="110" x2="156" y2="110" stroke="#d4a84a" stroke-width="2"/>
+    <text x="172" y="116" font-family="'JetBrains Mono', monospace" font-size="17" fill="#a0978a" letter-spacing="6">YOLKLAB · WORK 01 · 2026</text>
+  </g>
+
+  <!-- Decorative gold mark (top right) -->
+  <g transform="translate(1450, 200)">
+    <circle r="48" fill="none" stroke="#d4a84a" stroke-opacity="0.6" stroke-width="1"/>
+    <circle r="32" fill="none" stroke="#d4a84a" stroke-opacity="0.8" stroke-width="1"/>
+    <circle r="10" fill="#d4a84a"/>
+  </g>
+
+  <!-- Center serif glyphs -->
+  <text x="80" y="700" font-family="'Cormorant Garamond', 'Songti SC', 'Source Han Serif SC', serif" font-size="280" font-weight="400" fill="#f3eee0" letter-spacing="-6">提示词</text>
+
+  <!-- Tagline (italic latin) -->
+  <text x="84" y="780" font-family="'Cormorant Garamond', serif" font-size="48" font-style="italic" fill="#d4a84a">— 117 prompts, curated.</text>
+
+  <!-- Bottom meta line -->
+  <g transform="translate(80, 900)">
+    <text font-family="'JetBrains Mono', monospace" font-size="20" fill="#a0978a" letter-spacing="5">PROMPT-TOOLS</text>
+    <text x="260" font-family="'JetBrains Mono', monospace" font-size="20" fill="#5e574c" letter-spacing="5">·</text>
+    <text x="290" font-family="'JetBrains Mono', monospace" font-size="20" fill="#d4a84a" letter-spacing="5">v1.1</text>
+    <text x="380" font-family="'JetBrains Mono', monospace" font-size="20" fill="#5e574c" letter-spacing="5">·</text>
+    <text x="410" font-family="'JetBrains Mono', monospace" font-size="20" fill="#a0978a" letter-spacing="5">NEXT.JS · MDX · TAILWIND v4</text>
+  </g>
+
+  <!-- Corner ticks -->
+  <g stroke="#d4a84a" stroke-width="1.5" fill="none">
+    <path d="M 60 60 L 60 90 M 60 60 L 90 60"/>
+    <path d="M 1540 60 L 1540 90 M 1540 60 L 1510 60"/>
+    <path d="M 60 940 L 60 910 M 60 940 L 90 940"/>
+    <path d="M 1540 940 L 1540 910 M 1540 940 L 1510 940"/>
+  </g>
+</svg>
