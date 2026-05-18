@@ -98,6 +98,10 @@ The only edits that hot-reload cleanly are React components, CSS, and TypeScript
 - `vercel.json` adds `Content-Type: image/png` headers for `/opengraph-image` and `/apple-icon`, because static export emits without `.png` extension and Vercel's default is `application/octet-stream` (which strict crawlers reject).
 - Satori only loads TTF/OTF, not woff/woff2. If you add custom fonts in the OG image, fetch the TTF version (Google Fonts serves TTF only for UA `Mozilla/4.0`).
 
+### Vercel build configuration
+
+- **Do not add `"outputDirectory": "out"` to `vercel.json`**. With `framework: "nextjs"` + `output: "export"`, Vercel's Next.js builder needs to find `routes-manifest.json` in `.next/` (always there during build) while serving static files from `out/` — both happen automatically. Setting `outputDirectory: "out"` makes the builder look for `routes-manifest.json` inside `out/` and fail with `The file "/vercel/path0/out/routes-manifest.json" couldn't be found`. The sibling `liang-prompts` project intentionally omits this field; mirror that.
+
 ### Motion / animations
 
 - All animations live in client components — every file using `motion/react` starts with `"use client"`.
