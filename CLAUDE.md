@@ -146,6 +146,15 @@ The auto-sync writes new files when the product has a `kind: source` entry point
 
 When you hand-write a release that mirrors something that exists or will exist on GitHub Releases, **always include `manual: true`** to keep your wording.
 
+## Adding diary entries (`/diary`)
+
+Development-diary essays are a third content type, parallel to products/releases but deliberately separate from the release `/log`.
+
+- **Files live in `content/diary/*.md`** — note the `.md` extension, **not** `.mdx`. Diaries are long-form, hand-pasted prose, so they are rendered with `react-markdown` + `remark-gfm` (`src/components/diary/diary-markdown.tsx`), **not** `MDXRemote`. This is intentional and load-bearing: MDX treats a stray `<` or `{` in pasted prose as JSX and would fail the `output: 'export'` build / deploy. react-markdown treats the body as plain markdown (paste-safe; raw HTML ignored). **Do not "upgrade" diary rendering to MDXRemote.**
+- **Frontmatter**: `slug` (defaults to filename), `title`, `date` (YYYY-MM-DD), `summary` (used for the list excerpt + `<meta description>`), `tags: []`, optional `cover`, optional `draft: true` (excluded from build). Put the article's H1 and lead/blockquote into `title`/`summary` rather than repeating them in the body.
+- **Pipeline**: `loadAllDiaries()` / `loadDiaryBySlug()` in `src/lib/content/loader.ts` (module-cached, sorted by `date` desc). Pages: `src/app/diary/page.tsx` (list, year-grouped) and `src/app/diary/[slug]/page.tsx` (detail, SSG via `generateStaticParams`). `scripts/build-index.ts` also emits `diaries` into `index.json`.
+- The same content-cache caveat applies: adding/editing a `.md` requires restarting `pnpm dev`.
+
 ## Workflow
 
 - Single-owner repo. Direct push to `main` is the normal flow; Vercel auto-deploys.

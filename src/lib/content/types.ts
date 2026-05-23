@@ -55,6 +55,28 @@ export interface Release {
   githubUrl?: string;
 }
 
+export interface Diary {
+  slug: string;
+  title: string;
+  date: string;
+  summary: string;
+  tags: string[];
+  cover?: string;
+  /** When true, the entry is excluded from build output. */
+  draft?: boolean;
+  body: string;
+  filePath: string;
+}
+
+export interface DiaryIndex {
+  slug: string;
+  title: string;
+  date: string;
+  summary: string;
+  tags: string[];
+  cover?: string;
+}
+
 export interface ProductIndex {
   slug: string;
   title: string;
@@ -85,10 +107,12 @@ export interface SiteIndex {
   generatedAt: string;
   products: ProductIndex[];
   releases: ReleaseIndex[];
+  diaries: DiaryIndex[];
   counts: {
     tools: number;
     games: number;
     total: number;
     releases: number;
+    diaries: number;
   };
 }

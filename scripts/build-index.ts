@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { loadAllProducts, loadAllReleases } from "../src/lib/content/loader";
+import { loadAllDiaries, loadAllProducts, loadAllReleases } from "../src/lib/content/loader";
 import type { SiteIndex } from "../src/lib/content/types";
 
 const OUT = path.resolve(process.cwd(), "public/data/index.json");
@@ -8,6 +8,7 @@ const OUT = path.resolve(process.cwd(), "public/data/index.json");
 function main() {
   const products = loadAllProducts();
   const releases = loadAllReleases();
+  const diaries = loadAllDiaries();
 
   const productTitleBySlug = new Map(products.map((p) => [p.slug, p.title]));
   const productTypeBySlug = new Map(products.map((p) => [p.slug, p.type]));
@@ -41,15 +42,26 @@ function main() {
     title: r.title,
   }));
 
+  const diaryIndexes = diaries.map((d) => ({
+    slug: d.slug,
+    title: d.title,
+    date: d.date,
+    summary: d.summary,
+    tags: d.tags,
+    cover: d.cover,
+  }));
+
   const index: SiteIndex = {
     generatedAt: new Date().toISOString(),
     products: productIndexes,
     releases: releaseIndexes,
+    diaries: diaryIndexes,
     counts: {
       tools: products.filter((p) => p.type === "tool").length,
       games: products.filter((p) => p.type === "game").length,
       total: products.length,
       releases: releases.length,
+      diaries: diaries.length,
     },
   };
 
@@ -60,7 +72,7 @@ function main() {
   console.log(
     `✓ Built site index → ${path.relative(process.cwd(), OUT)} (${sizeKb} KB)\n` +
       `  tools: ${index.counts.tools}  games: ${index.counts.games}  products: ${index.counts.total}\n` +
-      `  releases: ${index.counts.releases}`,
+      `  releases: ${index.counts.releases}  diaries: ${index.counts.diaries}`,
   );
 }
 

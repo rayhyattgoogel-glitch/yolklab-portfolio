@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "./theme-toggle";
 
 const NAV = [
+  { href: "/diary", label: "diary" },
   { href: "/log", label: "log" },
   { href: "/about", label: "about" },
 ] as const;

@@ -1,0 +1,12 @@
+---
+date: "2026-05-16"
+product: prompt-tools
+version: 1.1.0
+kind: feature
+title: 新增收藏夹与暗色主题
+---
+
+- **收藏夹**：zustand + persist，本地 localStorage（键 `yop-favorites-v1`），SSR hydration 安全
+- **next-themes**：支持系统级暗色模式自动跟随
+- Header 加上 GitHub 项目入口
+- 通过 `@vercel/og` 在构建期生成 OG 图与 apple-icon，由 `vercel.json` 强制 `Content-Type: image/png`

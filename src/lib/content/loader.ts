@@ -3,6 +3,7 @@ import path from "node:path";
 import fg from "fast-glob";
 import matter from "gray-matter";
 import type {
+  Diary,
   Product,
   ProductEntry,
   ProductStatus,
@@ -14,9 +15,11 @@ import type {
 const ROOT = path.resolve(process.cwd(), "content");
 const PRODUCTS_DIR = path.join(ROOT, "products");
 const RELEASES_DIR = path.join(ROOT, "releases");
+const DIARY_DIR = path.join(ROOT, "diary");
 
 let productCache: Product[] | null = null;
 let releaseCache: Release[] | null = null;
+let diaryCache: Diary[] | null = null;
 
 function asString(v: unknown, fallback = ""): string {
   if (typeof v === "string") return v;
@@ -170,4 +173,50 @@ export function loadReleasesByProduct(productSlug: string): Release[] {
 
 export function loadRecentReleases(limit = 5): Release[] {
   return loadAllReleases().slice(0, limit);
+}
+
+export function loadAllDiaries(): Diary[] {
+  if (diaryCache) return diaryCache;
+
+  if (!fs.existsSync(DIARY_DIR)) {
+    console.warn(
+      `[content] Diary directory missing: ${DIARY_DIR}. Skipping.`,
+    );
+    diaryCache = [];
+    return diaryCache;
+  }
+
+  const files = fg.sync("*.md", { cwd: DIARY_DIR, absolute: true });
+  const records: Diary[] = [];
+
+  for (const file of files) {
+    const raw = fs.readFileSync(file, "utf-8");
+    const parsed = matter(raw);
+    const fm = parsed.data as Record<string, unknown>;
+    if (fm.draft === true) continue;
+    const slug = asString(fm.slug, path.basename(file, ".md"));
+    records.push({
+      slug,
+      title: asString(fm.title, slug),
+      date: asString(fm.date),
+      summary: asString(fm.summary),
+      tags: asArray<unknown>(fm.tags).map((t) => asString(t)).filter(Boolean),
+      cover: asString(fm.cover) || undefined,
+      draft: fm.draft === true ? true : undefined,
+      body: parsed.content.trim(),
+      filePath: path.relative(process.cwd(), file),
+    });
+  }
+
+  records.sort((a, b) => {
+    if (a.date !== b.date) return b.date.localeCompare(a.date);
+    return a.title.localeCompare(b.title, "zh-CN");
+  });
+
+  diaryCache = records;
+  return records;
+}
+
+export function loadDiaryBySlug(slug: string): Diary | undefined {
+  return loadAllDiaries().find((d) => d.slug === slug);
 }

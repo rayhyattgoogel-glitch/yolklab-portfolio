@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-18T15:34:10.058Z",
+  "generatedAt": "2026-05-23T08:11:36.470Z",
   "products": [
     {
       "slug": "prompt-tools",
@@ -18,7 +18,7 @@
       "cover": "/covers/prompt-tools.svg",
       "entryCount": 2,
       "hasQr": false,
-      "releaseCount": 2,
+      "releaseCount": 4,
       "latestRelease": "2026-05-18"
     }
   ],
@@ -40,12 +40,45 @@
       "version": "1.0.0",
       "kind": "release",
       "title": "首发上线"
+    },
+    {
+      "product": "prompt-tools",
+      "productTitle": "靓开源提示词",
+      "productType": "tool",
+      "date": "2026-05-16",
+      "version": "1.1.0",
+      "kind": "feature",
+      "title": "新增收藏夹与暗色主题"
+    },
+    {
+      "product": "prompt-tools",
+      "productTitle": "靓开源提示词",
+      "productType": "tool",
+      "date": "2026-03-12",
+      "version": "1.0.0",
+      "kind": "release",
+      "title": "首发上线"
+    }
+  ],
+  "diaries": [
+    {
+      "slug": "orchestrating-claude-code-team",
+      "title": "我给 Claude Code 装了两套技能系统，然后花了一下午让它们别打架",
+      "date": "2026-05-23",
+      "summary": "我先后装了两套 Claude Code 技能系统，结果它们见活就抢。这篇记一下我怎么把它们——还有另外两套设计技能——理成了一条不打架的流水线，包括踩的坑。",
+      "tags": [
+        "Claude Code",
+        "AI",
+        "工作流",
+        "复盘"
+      ]
     }
   ],
   "counts": {
     "tools": 1,
     "games": 0,
     "total": 1,
-    "releases": 2
+    "releases": 4,
+    "diaries": 1
   }
 }

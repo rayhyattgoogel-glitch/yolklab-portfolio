@@ -22,6 +22,9 @@ export function SiteFooter() {
             >
               index
             </Link>
+            <Link href="/diary" className="transition-colors hover:text-accent">
+              diary
+            </Link>
             <Link href="/log" className="transition-colors hover:text-accent">
               log
             </Link>
