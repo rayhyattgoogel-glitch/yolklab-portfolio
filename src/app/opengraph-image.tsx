@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { loadGoogleFontTTF } from "@/lib/og-font";
 
 export const dynamic = "force-static";
 export const alt = "Yolklab · 想到就去做，Just Do It！";
@@ -6,6 +7,12 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
+  // Satori has no CJK glyphs; load a subsetted serif so the Chinese tagline
+  // renders instead of tofu boxes.
+  const fontText =
+    "00 / index 2026yolklab想到就去做，Just Do It！—personal index of tools & games yolklab.net";
+  const fontData = await loadGoogleFontTTF("Noto Serif SC", fontText);
+
   return new ImageResponse(
     (
       <div
@@ -18,7 +25,7 @@ export default async function Image() {
           background: "#0d0c0a",
           padding: "72px 80px",
           color: "#f3eee0",
-          fontFamily: "serif",
+          fontFamily: "Noto Serif SC",
         }}
       >
         {/* Eyebrow */}
@@ -101,6 +108,11 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        { name: "Noto Serif SC", data: fontData, style: "normal", weight: 400 },
+      ],
+    },
   );
 }

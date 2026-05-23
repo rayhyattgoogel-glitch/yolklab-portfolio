@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { loadAllDiaries, loadDiaryBySlug } from "@/lib/content/loader";
+import { loadGoogleFontTTF } from "@/lib/og-font";
 
 export const dynamic = "force-static";
 export const alt = "yolklab · diary";
@@ -8,36 +9,6 @@ export const contentType = "image/png";
 
 export function generateStaticParams() {
   return loadAllDiaries().map((d) => ({ slug: d.slug }));
-}
-
-/**
- * Satori (next/og) ships only Latin glyphs, so CJK titles render as tofu
- * unless we hand it a font with the needed glyphs. We fetch a SUBSETTED TTF
- * (only the characters in `text`) from Google Fonts.
- *
- * Font format is chosen by Google from the User-Agent: modern browsers get
- * woff2, old IE gets EOT, old Safari gets SVG — none of which Satori can
- * parse. A generic/unknown UA makes Google fall back to plain TTF
- * (`format('truetype')`, sfnt magic 0x00010000), which is what Satori needs.
- */
-async function loadGoogleFontTTF(
-  family: string,
-  text: string,
-): Promise<ArrayBuffer> {
-  const url = `https://fonts.googleapis.com/css?family=${encodeURIComponent(
-    family,
-  )}&text=${encodeURIComponent(text)}`;
-  const css = await (
-    await fetch(url, { headers: { "User-Agent": "curl/8.0.0" } })
-  ).text();
-  // Prefer the truetype @font-face src; fall back to the first url().
-  const match =
-    css.match(/src:\s*url\(([^)]+)\)\s*format\(['"]truetype['"]\)/) ??
-    css.match(/src:\s*url\(([^)]+)\)/);
-  if (!match) {
-    throw new Error(`Could not extract TTF url from Google Fonts CSS for ${family}`);
-  }
-  return await (await fetch(match[1])).arrayBuffer();
 }
 
 export default async function Image({
