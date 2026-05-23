@@ -19,9 +19,14 @@ export async function generateMetadata(props: {
     title: diary.title,
     description: diary.summary,
     openGraph: {
+      type: "article",
       title: diary.title,
       description: diary.summary,
-      images: diary.cover ? [diary.cover] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: diary.title,
+      description: diary.summary,
     },
   };
 }

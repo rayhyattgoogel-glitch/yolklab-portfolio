@@ -23,6 +23,13 @@
       ]
     },
     {
+      "source": "/diary/(.*)/opengraph-image",
+      "headers": [
+        { "key": "Content-Type", "value": "image/png" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
       "source": "/data/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=300" }
